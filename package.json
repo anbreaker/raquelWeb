@@ -1,0 +1,26 @@
+{
+  "name": "mailNodeJs",
+  "version": "1.0.0",
+  "description": "## Tutorial: - https://www.youtube.com/watch?v=wu-1LpCyu1Y",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon src/index.js",
+    "start": "NODE_ENV=production node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anbreaker/mailNodeJs.git"
+  },
+  "keywords": [],
+  "author": "anbreaker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anbreaker/mailNodeJs/issues"
+  },
+  "homepage": "https://github.com/anbreaker/mailNodeJs#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.4.11"
+  }
+}
