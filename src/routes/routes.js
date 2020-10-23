@@ -6,19 +6,23 @@ router.post('/send-email', async (req, res) => {
   const {name, email, phone, message} = req.body;
 
   let contentHtml = `
-    <h1>User Information:</h1>
+    <h1>Información del Contacto:</h1>
     <ul>
-      <li>Username: ${name}</li>
-      <li>User Email: ${email}</li>      
+      <li><b>Nombre:</b> ${name}</li>
+      <li><b>Email :</b> ${email}</li>     
+      <li><b>Movil :</b> ${phone}</li>     
     </ul>
-    <p>Message: El correo lo manda--> <b>${email}</b> ${message}</p>
+    <p>
+      <h2><b>Mensaje:</b></h2>
+      ${message}
+    </p>
   `;
 
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
   const msg = {
-    to: 'antunez19+raquelweb@gmail.com', // Change to your recipient
-    from: `${email}`, // Change to your verified sender
+    to: 'raquelantunezduran+raquelweb@gmail.com', // Change to your recipient
+    from: `raquelantunezduran+raquelweb@gmail.com`, // Change to your verified sender
     subject: 'Sending with SendGrid is Fun',
     text: 'and easy to do anywhere, even with Node.js',
     html: contentHtml,
@@ -26,11 +30,18 @@ router.post('/send-email', async (req, res) => {
 
   sgMail
     .send(msg)
-    .then(() => {
-      console.log('Email sent');
-    })
+    .then(() => console.log('Email sent'))
     .catch((error) => {
+      // Log friendly error
       console.error(error);
+
+      if (error.response) {
+        // Extract error msg
+        const {message, code, response} = error;
+        // Extract response msg
+        const {headers, body} = response;
+        console.error(body);
+      }
     });
 
   res.redirect('/index.html');
