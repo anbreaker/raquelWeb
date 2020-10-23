@@ -23,8 +23,7 @@ router.post('/send-email', async (req, res) => {
   const msg = {
     to: 'raquelantunezduran+raquelweb@gmail.com', // Change to your recipient
     from: `raquelantunezduran+raquelweb@gmail.com`, // Change to your verified sender
-    subject: 'Sending with SendGrid is Fun',
-    text: 'and easy to do anywhere, even with Node.js',
+    subject: 'Correo Enviado desde raquelWeb',
     html: contentHtml,
   };
 
