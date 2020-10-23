@@ -4,5 +4,5 @@ package-lock.json
 
 # Optional npm cache directory
 .npm
-
+.env
 credentials.csv
