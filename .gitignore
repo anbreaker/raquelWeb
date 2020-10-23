@@ -6,3 +6,4 @@ package-lock.json
 .npm
 .env
 credentials.csv
+sendgrid.env

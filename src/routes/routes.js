@@ -1,9 +1,8 @@
 const {Router} = require('express');
-const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 const router = Router();
 
 router.post('/send-email', async (req, res) => {
-  console.log('pasa por aqui');
   const {name, email, phone, message} = req.body;
 
   let contentHtml = `
@@ -12,32 +11,27 @@ router.post('/send-email', async (req, res) => {
       <li>Username: ${name}</li>
       <li>User Email: ${email}</li>      
     </ul>
-    <p>Message: ${message}</p>
+    <p>Message: El correo lo manda--> <b>${email}</b> ${message}</p>
   `;
 
-  console.log(contentHtml);
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    secure: false,
-    auth: {
-      user: `${process.env.MAIL}`,
-      pass: `${process.env.PASS_MAIL}`,
-    },
-    tls: {
-      rejectUnaurhorized: false,
-    },
-  });
-
-  const info = await transporter.sendMail({
-    from: "'Prueba NodeMailer' <cora34@ethereal.email>",
-    to: 'cora34@ethereal.email',
-    subject: 'Website contact Form',
+  const msg = {
+    to: 'antunez19+raquelweb@gmail.com', // Change to your recipient
+    from: `${email}`, // Change to your verified sender
+    subject: 'Sending with SendGrid is Fun',
+    text: 'and easy to do anywhere, even with Node.js',
     html: contentHtml,
-  });
+  };
 
-  console.log('Message sent', info.messageId);
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log('Email sent');
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 
   res.redirect('/index.html');
 });
