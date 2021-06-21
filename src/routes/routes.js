@@ -1,9 +1,10 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const sgMail = require('@sendgrid/mail');
+
 const router = Router();
 
 router.post('/send-email', async (req, res) => {
-  const {name, email, phone, message} = req.body;
+  const { name, email, phone, message } = req.body;
 
   let contentHtml = `
     <h1>Información del Contacto:</h1>
@@ -36,10 +37,11 @@ router.post('/send-email', async (req, res) => {
 
       if (error.response) {
         // Extract error msg
-        const {message, code, response} = error;
+        const { message, code, response } = error;
         // Extract response msg
-        const {headers, body} = response;
+        const { headers, body } = response;
         console.error(body);
+        console.error(headers, message, code, response, '<<<<<------------El ERROR');
       }
     });
 
